@@ -16,8 +16,8 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            artifact_name: v0k-x86_64-unknown-linux-gnu
+            target: x86_64-unknown-linux-musl
+            artifact_name: v0k-x86_64-unknown-linux-musl
           - os: macos-latest
             target: aarch64-apple-darwin
             artifact_name: v0k-aarch64-apple-darwin
@@ -38,6 +38,10 @@ jobs:
 
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
+
+      - name: Install musl-tools (Linux only)
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
 
       - name: Build binary
         run: cargo build --release --target ${{ matrix.target }}

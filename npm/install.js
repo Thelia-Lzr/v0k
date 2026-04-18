@@ -15,7 +15,7 @@ const platform = os.platform();
 const arch = os.arch();
 
 if (platform === 'linux' && arch === 'x64') {
-  rustTarget = 'x86_64-unknown-linux-gnu';
+  rustTarget = 'x86_64-unknown-linux-musl';
 } else if (platform === 'darwin' && arch === 'x64') {
   rustTarget = 'x86_64-apple-darwin';
 } else if (platform === 'darwin' && arch === 'arm64') {
